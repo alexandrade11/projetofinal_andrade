@@ -36,7 +36,7 @@ app.get('/api/songs', (req, res) => {
 });
 });
 
-app.post('/songs', (req, res) => {
+app.post('/api/songs', (req, res) => {
     const title = req.body.title;
     const artist = req.body.artist;
     const genre = req.body.genre;
@@ -58,6 +58,45 @@ connection.query(myQuery, (err, results) => {
   });
 })
 
+app.put('/api/songs/:id', (req, res) =>{
+    const id = req.body.id;
+    const title = req.body.title;
+    const artist = req.body.artist;
+    const genre = req.body.genre;
+    const album = req.body.album;
+    const duration_seconds = req.body.duration_seconds;
+    const release_date = req.body.release_date;
+    const likes = req.body.likes;
+
+    const myQuery = `UPDATE ${tab_songs} SET title = "${title}", artist = "${artist}", genre = "${genre}", album = "${album}",
+    duration_seconds = "${duration_seconds}",release_date = "${release_date}",likes = "${likes}" WHERE id = "${id}"`;
+
+    connection.query(myQuery, (err, results) => {
+      if (err) {
+        return res.status(500).send('Erro ao adicionar user: ' + err.message);
+      }
+      res.status(200).send('User atualizado com sucesso!');
+    });
+})
+
+app.delete('/api/songs/:id', (req, res) =>{
+  const id = req.params.id;
+
+  const myQuery = `DELETE FROM ${tab_songs} WHERE id = ${id}`;
+
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(500).send('Erro ao deletar user: ' + err.message);
+    }
+    res.status(200).send('user removido com sucesso!');
+  });
+})
+
+app.get('/api/songs/:id', (req, res) =>{
+  const id = req.params.id;
+
+  const myQuery = `SELECT * FROM ${tab_songs} WHERE id = ${id} `
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`)
