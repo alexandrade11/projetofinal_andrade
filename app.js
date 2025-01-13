@@ -11,7 +11,7 @@ password: '',
 database: 'proj_finalt1',
 port:3306
 
-})a
+})
 
 connection.connect((err) =>{
     if(err){
