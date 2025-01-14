@@ -23,7 +23,8 @@ connection.connect((err) =>{
 
 app.use(express.json())
 
-const tab_songs = "songs"
+const tab_songs = "songs";
+var priceperlike = 0.1;
 
 app.get('/api/songs', (req, res) => {
     const myQuery = `SELECT * FROM ${tab_songs}`
@@ -96,6 +97,17 @@ app.get('/api/songs/:id', (req, res) =>{
   const id = req.params.id;
 
   const myQuery = `SELECT * FROM ${tab_songs} WHERE id = ${id} `
+
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(500).send('Erro ao buscar users: ' + err.message);
+    }
+    res.json(results);
+});
+})
+
+app.get('/api/songs/:id', (req, res) =>{
+  
 })
 
 app.listen(port, () => {
