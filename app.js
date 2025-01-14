@@ -106,9 +106,32 @@ app.get('/api/songs/:id', (req, res) =>{
 });
 })
 
-app.get('/api/songs/:id', (req, res) =>{
-  
+app.get('/api/price', (req, res) =>{
+  const price = {"price": priceperlike};
+  res.json(price);
+});
+
+app.put('/api/price', (req, res)=>{
+       priceperlike = 0.01;
+       const price = {"price": priceperlike};
+       res.json(price);
 })
+
+app.get('/api/songs/:id/revenue', (req, res) =>{
+  const id = req.params.id;
+  const likes = req.params.likes;
+
+  const myQuery = `SELECT likes FROM ${tab_songs} where id = ${id}`
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(500).send('Erro ao buscar users: ' + err.message);
+    }
+    const revenue = {"revenue": priceperlike*likes};
+    res.json(revenue);
+});
+});
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`)
