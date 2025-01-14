@@ -31,7 +31,7 @@ app.get('/api/songs', (req, res) => {
 
     connection.query(myQuery, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao buscar users: ' + err.message);
+      return res.status(500).send('Erro ao buscar musicas: ' + err.message);
     }
     res.json(results);
 });
@@ -53,7 +53,7 @@ const myQuery = `INSERT INTO ${tab_songs}(title, album, genre, album, duration_s
 
 connection.query(myQuery, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao adicionar user: ' + err.message);
+      return res.status(500).send('Erro ao adicionar musica: ' + err.message);
     }
     res.status(200).send('User adicionado com sucesso!');
   });
@@ -74,7 +74,7 @@ app.put('/api/songs/:id', (req, res) =>{
 
     connection.query(myQuery, (err, results) => {
       if (err) {
-        return res.status(500).send('Erro ao adicionar user: ' + err.message);
+        return res.status(500).send('Erro ao atualizar musica: ' + err.message);
       }
       res.status(200).send('User atualizado com sucesso!');
     });
@@ -87,7 +87,7 @@ app.delete('/api/songs/:id', (req, res) =>{
 
   connection.query(myQuery, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao deletar user: ' + err.message);
+      return res.status(500).send('Erro ao deletar musica: ' + err.message);
     }
     res.status(200).send('user removido com sucesso!');
   });
@@ -100,7 +100,7 @@ app.get('/api/songs/:id', (req, res) =>{
 
   connection.query(myQuery, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao buscar users: ' + err.message);
+      return res.status(500).send('Erro ao buscar a musica: ' + err.message);
     }
     res.json(results);
 });
@@ -124,7 +124,7 @@ app.get('/api/songs/:id/revenue', (req, res) =>{
   const myQuery = `SELECT likes FROM ${tab_songs} where id = ${id}`
   connection.query(myQuery, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao buscar users: ' + err.message);
+      return res.status(500).send('Erro ao buscar : ' + err.message);
     }
     const revenue = {"revenue": priceperlike*likes};
     res.json(revenue);
@@ -142,6 +142,19 @@ const bands=[
       "band_members":["Chris Martin","Jonny Buckland","Guy Berryman","Will Champion","Phil Harvey"],
     }
 ]
+
+app.get("/api/songs/:id/band",(req, res) =>{
+  const id = req.params.id;
+  const artist = req.params.artist;
+
+  const myQuery = `SELECT artist FROM ${tab_songs} where id = ${id}`
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(404).send('Erro ao buscar a banda: ' + err.message);
+    }
+    
+});
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`)
