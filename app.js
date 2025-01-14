@@ -131,7 +131,17 @@ app.get('/api/songs/:id/revenue', (req, res) =>{
 });
 });
 
+const bands=[
+    {
+        "artist": "INOHA",
+        "band_members":["Chris Young", "Gavin Gonzalez", "Keanu Bicol", "Ricky Juarez"],
+    },
 
+    {
+      "artist": "coldplay",
+      "band_members":["Chris Martin","Jonny Buckland","Guy Berryman","Will Champion","Phil Harvey"],
+    }
+]
 
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`)
