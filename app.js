@@ -119,7 +119,6 @@ app.put('/api/price', (req, res)=>{
 
 app.get('/api/songs/:id/revenue', (req, res) =>{
   const id = req.params.id;
-  const likes = req.params.likes;
 
   const myQuery = `SELECT likes FROM ${tab_songs} where id = ${id}`
   connection.query(myQuery, (err, results) => {
@@ -145,7 +144,6 @@ const bands=[
 
 app.get("/api/songs/:id/band",(req, res) =>{
   const id = req.params.id;
-  const artist = req.params.artist;
 
   const myQuery = `SELECT artist FROM ${tab_songs} where id = ${id}`
   connection.query(myQuery, (err, results) => {
@@ -153,10 +151,17 @@ app.get("/api/songs/:id/band",(req, res) =>{
       return res.status(404).send('Erro ao buscar a banda: ' + err.message);
     }
     for(let i=0; i<bands.length; i++){
-      
+      if(results[0].artist == bands[i].artist){
+        res.json(bands[i])
+      }
     }
 });
 });
+
+app.post("/api/songs/:id/band")
+const id = req.params.id;
+
+  const myQuery = `INSERT INTO ${tab_songs} where id = ${id}`
 
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`)
