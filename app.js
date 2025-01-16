@@ -126,7 +126,7 @@ app.get('/api/songs/:id/revenue', (req, res) =>{
     if (err) {
       return res.status(500).send('Erro ao buscar : ' + err.message);
     }
-    const revenue = {"revenue": priceperlike*likes};
+    const revenue = results[0].likes * priceperlike;
     res.json(revenue);
 });
 });
@@ -138,7 +138,7 @@ const bands=[
     },
 
     {
-      "artist": "coldplay",
+      "artist": "Coldplay",
       "band_members":["Chris Martin","Jonny Buckland","Guy Berryman","Will Champion","Phil Harvey"],
     }
 ]
@@ -152,7 +152,9 @@ app.get("/api/songs/:id/band",(req, res) =>{
     if (err) {
       return res.status(404).send('Erro ao buscar a banda: ' + err.message);
     }
-    
+    for(let i=0; i<bands.length; i++){
+      
+    }
 });
 });
 
