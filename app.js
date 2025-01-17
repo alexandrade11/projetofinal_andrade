@@ -23,11 +23,10 @@ connection.connect((err) =>{
 
 app.use(express.json())
 
-const tab_songs = "songs";
 var priceperlike = 0.1;
 
 app.get('/api/songs', (req, res) => {
-    const myQuery = `SELECT * FROM ${tab_songs}`
+    const myQuery = `SELECT * FROM songs`
 
     connection.query(myQuery, (err, results) => {
     if (err) {
@@ -48,7 +47,7 @@ app.post('/api/songs', (req, res) => {
     const created_at = req.body.created_at;
     
 
-const myQuery = `INSERT INTO ${tab_songs}(title, album, genre, album, duration_seconds, release_date, likes, created_at) VALUES (NULL, 
+const myQuery = `INSERT INTO songs(title, album, genre, album, duration_seconds, release_date, likes, created_at) VALUES (NULL, 
 "${title}", "${artist}", "${genre}", "${album}", "${duration_seconds}", "${release_date}", "${likes}", current_timestamp())`;
 
 connection.query(myQuery, (err, results) => {
@@ -69,7 +68,7 @@ app.put('/api/songs/:id', (req, res) =>{
     const release_date = req.body.release_date;
     const likes = req.body.likes;
 
-    const myQuery = `UPDATE ${tab_songs} SET title = "${title}", artist = "${artist}", genre = "${genre}", album = "${album}",
+    const myQuery = `UPDATE songs SET title = "${title}", artist = "${artist}", genre = "${genre}", album = "${album}",
     duration_seconds = "${duration_seconds}",release_date = "${release_date}",likes = "${likes}" WHERE id = "${id}"`;
 
     connection.query(myQuery, (err, results) => {
@@ -83,7 +82,7 @@ app.put('/api/songs/:id', (req, res) =>{
 app.delete('/api/songs/:id', (req, res) =>{
   const id = req.params.id;
 
-  const myQuery = `DELETE FROM ${tab_songs} WHERE id = ${id}`;
+  const myQuery = `DELETE FROM songs WHERE id = ${id}`;
 
   connection.query(myQuery, (err, results) => {
     if (err) {
@@ -96,7 +95,7 @@ app.delete('/api/songs/:id', (req, res) =>{
 app.get('/api/songs/:id', (req, res) =>{
   const id = req.params.id;
 
-  const myQuery = `SELECT * FROM ${tab_songs} WHERE id = ${id} `
+  const myQuery = `SELECT * FROM songs WHERE id = ${id} `
 
   connection.query(myQuery, (err, results) => {
     if (err) {
@@ -120,7 +119,7 @@ app.put('/api/price', (req, res)=>{
 app.get('/api/songs/:id/revenue', (req, res) =>{
   const id = req.params.id;
 
-  const myQuery = `SELECT likes FROM ${tab_songs} where id = ${id}`
+  const myQuery = `SELECT likes FROM songs where id = ${id}`
   connection.query(myQuery, (err, results) => {
     if (err) {
       return res.status(500).send('Erro ao buscar : ' + err.message);
@@ -145,7 +144,7 @@ const bands=[
 app.get("/api/songs/:id/band",(req, res) =>{
   const id = req.params.id;
 
-  const myQuery = `SELECT artist FROM ${tab_songs} where id = ${id}`
+  const myQuery = `SELECT artist FROM songs where id = ${id}`
   connection.query(myQuery, (err, results) => {
     if (err) {
       return res.status(404).send('Erro ao buscar a banda: ' + err.message);
@@ -158,10 +157,39 @@ app.get("/api/songs/:id/band",(req, res) =>{
 });
 });
 
-app.post("/api/songs/:id/band")
-const id = req.params.id;
+app.post("/api/songs/:id/band",(req, res) =>{
+  const id = req.params.id;
+  const band_members = req.body.band_members;
+ 
+  const myQuery = `SELECT artist FROM songs where id=${id}`
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(500).send('Erro ao buscar songs: ' + err.message);
+    }
+ 
+  const band = {
+      "artist": results[0].artist,
+      "band_members": band_members
+  }
+  bands.push(band);
+  res.sendStatus(200);
+  console.log(bands)
+})
+})
 
-  const myQuery = `INSERT INTO ${tab_songs} where id = ${id}`
+app.delete('/api/songs/:id/band', (req, res) =>{;
+  const id = req.params.id;
+
+  const myQuery = `DELETE artist FROM songs where id=${id}`
+
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(500).send('Erro ao buscar songs: ' + err.message);
+    }
+  res.sendStatus(200);
+
+});
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on http://localhost:${port}`)
