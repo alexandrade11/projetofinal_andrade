@@ -111,7 +111,7 @@ app.get('/api/price', (req, res) =>{
 });
 
 app.put('/api/price', (req, res)=>{
-       priceperlike = 0.01;
+       priceperlike = req.body.price
        const price = {"price": priceperlike};
        res.json(price);
 })
@@ -177,16 +177,40 @@ app.post("/api/songs/:id/band",(req, res) =>{
 })
 })
 
-app.delete('/api/songs/:id/band', (req, res) =>{;
+app.put('/api/songs/:id/band', (req, res) =>{;
   const id = req.params.id;
 
-  const myQuery = `DELETE artist FROM songs where id=${id}`
+  const myQuery = `SELECT artist FROM songs where id=${id}`
 
   connection.query(myQuery, (err, results) => {
     if (err) {
       return res.status(500).send('Erro ao buscar songs: ' + err.message);
     }
-  res.sendStatus(200);
+    for(let i=0; i<bands.length; i++){
+      if(results[0].artist == bands[i].artist){
+       bands[i].band_members = req.body.band_members;
+       res.status(200).send("membros atualizados com sucesso");
+      }
+    }
+      res.status(404).send("falha ao atualizar membros");
+});
+});
+
+app.delete('/api/songs/:id/band', (req, res) =>{;
+  const id = req.params.id;
+
+  const myQuery = `SELECT artist FROM songs where id=${id}`
+
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(500).send('Erro ao buscar songs: ' + err.message);
+    }
+    for(let i=0; i<bands.length; i++){
+      if(results[0].artist == bands[i].artist){
+        delete bands[i].band_members;
+      }
+    
+    }
 
 });
 });
