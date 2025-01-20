@@ -207,11 +207,13 @@ app.delete('/api/songs/:id/band', (req, res) =>{;
     }
     for(let i=0; i<bands.length; i++){
       if(results[0].artist == bands[i].artist){
+        bands[i]={};
+        return res.status(200).send("membros apagados com sucesso")
         
       }
-    
+      
     }
-
+    return res.status(404).send("membros não foram apagados")
 });
 });
 
