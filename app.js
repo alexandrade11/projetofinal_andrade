@@ -189,7 +189,7 @@ app.put('/api/songs/:id/band', (req, res) =>{;
     for(let i=0; i<bands.length; i++){
       if(results[0].artist == bands[i].artist){
        bands[i].band_members = req.body.band_members;
-       res.status(200).send("membros atualizados com sucesso");
+       return res.status(200).send("membros atualizados com sucesso");
       }
     }
       res.status(404).send("falha ao atualizar membros");
@@ -207,7 +207,7 @@ app.delete('/api/songs/:id/band', (req, res) =>{;
     }
     for(let i=0; i<bands.length; i++){
       if(results[0].artist == bands[i].artist){
-        delete bands[i].band_members;
+        
       }
     
     }
