@@ -13,6 +13,22 @@ port:3306
 
 })
 
+app.get('/', (req, res) =>{
+  res.render('index');
+}) 
+
+app.get('/form', (req, res) =>{
+   res.render('new-song');
+}); 
+
+app.get('/altpreço', (req, res)=>{
+ res.render('price');
+})
+
+app.get('/lista', (req, res)=>{
+  res.render('songs');
+ })
+
 connection.connect((err) =>{
     if(err){
         console.error('erro a conectar à base de dados', err.message);     
