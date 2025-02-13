@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mysql = require('mysql2');
-const port = 3000;
+const port = 3009;
+app.set('view engine', 'ejs');
+// Criar o servidor HTTP
+app.listen(port, () => {
+  console.log(`Example app listening on http://localhost:${port}`)
+})
 
 const connection = mysql.createConnection({
 host: '127.0.0.1',
@@ -21,7 +26,7 @@ app.get('/form', (req, res) =>{
    res.render('new-song');
 }); 
 
-app.get('/altpreço', (req, res)=>{
+app.get('/altprice', (req, res)=>{
  res.render('price');
 })
 
@@ -233,7 +238,5 @@ app.delete('/api/songs/:id/band', (req, res) =>{;
 });
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening on http://localhost:${port}`)
-  })
+
   
