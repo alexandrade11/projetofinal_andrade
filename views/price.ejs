@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -10,10 +11,26 @@
 
     <h1>Alterar preço dos likes</h1>
 
-    <form>
-        <h3>Preço por like:</h3><input type="text" name="price">
+    <form id="alt_preco">
+        <h3>Preço por like:</h3><input type="text" value="<%= price %>" name="price" id="price">
         <button type="submit">Alterar</button>
     </form>
-    
+    <script>
+        document.getElementById('alt_preco').addEventListener('submit', function(event){
+         event.preventDefault();
+ 
+         const formdata = new FormData(event.target);
+         const data = Object.fromEntries(formdata.entries());
+ 
+         axios.put('/api/price', data)
+         .then(response =>{
+             console.log('Success', response.data);
+             location.reload();
+         })
+         .catch((error)=>{
+             console.log('Error:', error)
+         })
+        }) 
+    </script>
 </body>
 </html>

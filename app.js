@@ -27,7 +27,9 @@ app.get('/form', (req, res) =>{
 }); 
 
 app.get('/altprice', (req, res)=>{
- res.render('price');
+ res.render('price', {price: priceperlike});
+
+ 
 })
 
 app.get('/lista', (req, res)=>{
@@ -58,26 +60,19 @@ app.get('/api/songs', (req, res) => {
 });
 
 app.post('/api/songs', (req, res) => {
-    const title = req.body.title;
-    const artist = req.body.artist;
-    const genre = req.body.genre;
-    const album = req.body.album;
-    const duration_seconds = req.body.duration_seconds;
-    const release_date = req.body.release_date;
-    const likes = req.body.likes;
-    const created_at = req.body.created_at;
-    
 
-const myQuery = `INSERT INTO songs(title, album, genre, album, duration_seconds, release_date, likes, created_at) VALUES (NULL, 
-"${title}", "${artist}", "${genre}", "${album}", "${duration_seconds}", "${release_date}", "${likes}", current_timestamp())`;
+  const {title, artist, album, genre, duration_seconds, release_date, likes} = req.body;
 
-connection.query(myQuery, (err, results) => {
+  const query = `INSERT INTO songs (title, artist, album, genre, duration_seconds, release_date, likes) VALUES ("${title}", "${artist}", "${album}", "${genre}", "${duration_seconds}", "${release_date}", "${likes}")`;
+
+  connection.query(query, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao adicionar musica: ' + err.message);
+      return res.status(500).send('Erro ao adicionar música: ' + err.message);
     }
-    res.status(200).send('User adicionado com sucesso!');
+    res.sendStatus(200);
   });
-})
+});
+
 
 app.put('/api/songs/:id', (req, res) =>{
     const id = req.body.id;
