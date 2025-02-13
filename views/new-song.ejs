@@ -9,14 +9,14 @@
     <%- include("partials/header") %>
 
     <h1>Criar uma nova musica</h1>
-    <form action="/api/songs" method="post">
-     Título<input type="text" placeholder="Insira o Título" name="texttitle">
-     Artista<input type="text" placeholder="Insira o Artista" name="textartist">
-     Género<input type="text" placeholder="Insira o Género" name="textgenre">
-     Album<input type="text" placeholder="Insira o Album" name="textalbum">
-     duração(seg)<input type="text" placeholder="Insira a duração" name="texttime">
-     Data<input type="date" name="textdate">
-     Likes<input type="text" placeholder="Insira o nº de likes" name="textlikes">
+    <form  method="post">
+     Título<input type="text" placeholder="Insira o Título" id="texttitle">
+     Artista<input type="text" placeholder="Insira o Artista" id="textartist">
+     Género<input type="text" placeholder="Insira o Género" id="textgenre">
+     Album<input type="text" placeholder="Insira o Album" id="textalbum">
+     duração(seg)<input type="text" placeholder="Insira a duração" id="texttime">
+     Data<input type="date" id="textdate">
+     Likes<input type="text" placeholder="Insira o nº de likes" id="textlikes">
      <br>
      <button type="submit">Criar</button>    
     </form>    
