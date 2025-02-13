@@ -9,7 +9,7 @@
     <%- include("partials/header") %>
 
     <h1>Criar uma nova musica</h1>
-    <form  method="post">
+    <form  id="ad_song">
      Título<input type="text" placeholder="Insira o Título" id="texttitle">
      Artista<input type="text" placeholder="Insira o Artista" id="textartist">
      Género<input type="text" placeholder="Insira o Género" id="textgenre">
@@ -20,6 +20,22 @@
      <br>
      <button type="submit">Criar</button>    
     </form>    
-    
+    <script>
+       document.getElementById('ad_song').addEventListener('submit', function(event){
+        event.preventDefault();
+
+        const formdata = new FormData(event.target);
+        const data = Object.fromEntries(formdata.entries());
+
+        axios.post('/api/songs', data)
+        .then(response =>{
+            console.log('Success', response.data);
+            location.reload();
+        })
+        .catch((error)=>{
+            console.log('Error:', error)
+        })
+       }) 
+    </script>
 </body>
 </html>
