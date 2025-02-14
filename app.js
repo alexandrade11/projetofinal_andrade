@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mysql = require('mysql2');
+const axios = require('axios')
 const port = 3009;
 app.set('view engine', 'ejs');
 // Criar o servidor HTTP
@@ -33,15 +34,14 @@ app.get('/altprice', (req, res)=>{
 })
 
 app.get('/lista', (req, res)=>{
-  res.render('songs');
 
-  axios.get('/api/songs')
+  axios.get(`http://localhost:${port}/api/songs`)
   .then(response =>{
-   res.render('songs', {tabela: response.data})
-})
-.catch((error)=>{
-    console.log('Error:', error)
-})
+    res.render('songs', {tabela: response.data})
+  })
+  .catch((error)=>{
+      console.log('Error:', error)
+  })
 })   
 
   
