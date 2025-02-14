@@ -34,7 +34,17 @@ app.get('/altprice', (req, res)=>{
 
 app.get('/lista', (req, res)=>{
   res.render('songs');
- })
+
+  axios.get('/api/songs')
+  .then(response =>{
+   res.render('songs', {tabela: response.data})
+})
+.catch((error)=>{
+    console.log('Error:', error)
+})
+})   
+
+  
 
 connection.connect((err) =>{
     if(err){

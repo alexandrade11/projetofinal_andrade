@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -13,9 +14,26 @@
     <p>Utilize o menu acima para navegares pela aplicação</p>
     <br>
     <p>Obter uma música por ID</p>
-    <form>
-       <input type="text" placeholder="Insira um ID" name="textid">
-       <button></button> 
+    <form id="search_song">
+       <input type="text" placeholder="Insira um ID" name="id" id="id">
+       <button>Pesquisar</button> 
     </form>
+    <script>
+        document.getElementById('search_song').addEventListener('submit', function(event){
+         event.preventDefault();
+ 
+         const formdata = new FormData(event.target);
+         const data = Object.fromEntries(formdata.entries());
+ 
+         axios.post('/api/songs/:id', data)
+         .then(response =>{
+             console.log('Success', response.data);
+             location.reload();
+         })
+         .catch((error)=>{
+             console.log('Error:', error)
+         })
+        }) 
+     </script>
 </body>
 </html>
