@@ -39,8 +39,8 @@
     <%}%>
     </table>
     <script>
-         function apagar_linha(index){
-         let id = index   
+         function apagar_linha(i){
+         let id = i   
          axios.delete(`/api/songs/${id}`)
          .then(response =>{
              console.log('Success', response.data);
