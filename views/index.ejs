@@ -14,26 +14,13 @@
     <p>Utilize o menu acima para navegares pela aplicação</p>
     <br>
     <p>Obter uma música por ID</p>
-    <form id="search_song">
-       <input type="text" placeholder="Insira um ID" name="id" id="id">
-       <button>Pesquisar</button> 
-    </form>
+       <input type="text" placeholder="Insira um ID" name="pesquisar_id" id="pesquisar_id">
+       <button onclick="pesquisar()" id="" >Pesquisar</button> 
+    
     <script>
-        document.getElementById('search_song').addEventListener('submit', function(event){
-         event.preventDefault();
- 
-         const formdata = new FormData(event.target);
-         const data = Object.fromEntries(formdata.entries());
- 
-         axios.post('/api/songs/:id', data)
-         .then(response =>{
-             console.log('Success', response.data);
-             location.reload();
-         })
-         .catch((error)=>{
-             console.log('Error:', error)
-         })
-        }) 
+        function pesquisar(){            
+            window.location.href ='/songs/' + document.getElementById('pesquisar_id').value
+        }
      </script>
 </body>
 </html>

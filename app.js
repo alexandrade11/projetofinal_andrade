@@ -33,6 +33,7 @@ app.get('/altprice', (req, res)=>{
  
 })
 
+
 app.get('/lista', (req, res)=>{
 
   axios.get(`http://localhost:${port}/api/songs`)
@@ -68,6 +69,20 @@ app.get('/api/songs', (req, res) => {
     res.json(results);
 });
 });
+
+app.get('/songs/:id', (req, res) => {
+  const id=req.params.id;
+
+  axios.get(`http://localhost:${port}/api/songs/${id}`)
+  .then(response =>{
+    res.render('songs_pesq', {tabela: response.data, pesquisar_id: id, price: priceperlike, likes: response.data[0].likes})
+  })
+  .catch((error)=>{
+      console.log('Error:', error)
+  })
+})   
+
+
 
 app.post('/api/songs', (req, res) => {
 
@@ -141,6 +156,8 @@ app.put('/api/price', (req, res)=>{
        const price = {"price": priceperlike};
        res.json(price);
 })
+
+
 
 app.get('/api/songs/:id/revenue', (req, res) =>{
   const id = req.params.id;
