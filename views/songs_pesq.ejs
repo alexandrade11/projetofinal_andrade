@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -39,16 +41,62 @@
 
 <h1>Editar</h1>
 <form  id="ed_song">
-    Título<input type="text" value="<%= tabela[0].title %>" id="title" name="title" required><br>
-    Artista<input type="text" value="<%= tabela[0].artist%>" id="artist" name="artist" required><br>
-    Género<input type="text" value="<%= tabela[0].genre %>" id="genre" name="genre" required><br>
-    Album<input type="text" value="<%= tabela[0].album %>" id="album" name="album" required><br>
-    duração(seg)<input type="text" value="<%= tabela[0].duration_seconds %>" id="duration_seconds" name="duration_seconds" required><br>
-    Data<input type="date" id="release_date" name="release_date" required><br>
-    Likes<input type="text" value="<%= tabela[0].likes %>" id="likes" name="likes" required>
+    Título<input type="text" value="<%= tabela[0].title %>" id="title" name="title"><br>
+    Artista<input type="text" value="<%= tabela[0].artist%>" id="artist" name="artist"><br>
+    Género<input type="text" value="<%= tabela[0].genre %>" id="genre" name="genre"><br>
+    Album<input type="text" value="<%= tabela[0].album %>" id="album" name="album"><br>
+    duração(seg)<input type="text" value="<%= tabela[0].duration_seconds %>" id="duration_seconds" name="duration_seconds"><br>
+    Data<input type="date" id="release_date" name="release_date"><br>
+    Likes<input type="text" value="<%= tabela[0].likes %>" id="likes" name="likes">
     <br>
     <button type="submit">Editar</button>    
-   </form>    
+   </form> 
+   
+   
+   <h1>Letra da música: </h1>
+   
+   <div id="container-letra">
+       <span id="letra"></span>
+   </div>
+
+   <script>
+      
+       axios.get(`https://api.lyrics.ovh/v1/<%=tabela[0].artist%>/<%=tabela[0].title%>`)
+       .then(response =>{
+    
+           response.data.lyrics = JSON.stringify(response.data.lyrics);
+           response.data.lyrics = response.data.lyrics.replace(new RegExp("\\\\n", "g"), "<br />");
+        
+    
+           document.getElementById("letra").innerHTML = response.data.lyrics;
+      
+     })
+     .catch((error)=>{
+       console.error('Error',error);
+       document.getElementById("letra").innerHTML = "Erro: A música não foi encontrada.";
+     });
+    
+    
+            
+   </script>
+
+<script>
+    document.getElementById('ed_song').addEventListener('submit', function(event){
+     event.preventDefault();
+
+     const formdata = new FormData(event.target);
+     const data = Object.fromEntries(formdata.entries());
+
+     axios.put('/api/songs/<%= pesquisar_id %>', data)
+     .then(response =>{
+         console.log('Success', response.data);
+         location.reload();
+     })
+     .catch((error)=>{
+         console.log('Error:', error)
+     })
+    }) 
+ </script>
 
 </body>
 </html>

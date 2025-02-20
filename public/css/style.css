@@ -1,0 +1,221 @@
+/* Estilo do header */
+.container-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+}
+
+/* Estilo dos formulários */
+header form {
+    margin: 0 15px;
+}
+
+/* Estilo dos botões */
+header button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+/* Resetando margens e paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Definindo o estilo geral do corpo da página */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo do cabeçalho */
+h1 {
+    font-size: 3em;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo dos parágrafos */
+p {
+    font-size: 1.4em;
+    text-align: center;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    max-width: 600px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo do contêiner da pesquisa */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1f1f1f;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo do campo de entrada de texto */
+input[type="text"] {
+    padding: 12px 20px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #333;
+    border: 2px solid #444;
+    border-radius: 8px;
+    width: 300px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efeito de foco no campo de entrada */
+input[type="text"]:focus {
+    border-color: #ff6600;
+    outline: none;
+    box-shadow: 0 0 8px rgba(255, 102, 0, 0.7);
+}
+
+/* Estilo do botão de pesquisa */
+button {
+    padding: 12px 30px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #444;
+    border: 2px solid #555;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+button:hover {
+    background-color: #ff6600;
+    transform: translateY(-3px);
+}
+
+/* Efeito de clique no botão */
+button:active {
+    transform: translateY(1px);
+}
+
+/* Estilo de espaçamento adicional entre elementos */
+br {
+    margin-bottom: 20px;
+}
+
+/* Estilo de navegação superior */
+nav {
+    width: 100%;
+    background-color: #1a1a1a;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* Links de navegação */
+nav a {
+    text-decoration: none;
+    color: #e0e0e0;
+    margin: 0 25px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+/* Efeito de hover nos links de navegação */
+nav a:hover {
+    color: #ff6600;
+    border-bottom: 2px solid #ff6600;
+}
+
+/* Estilos para dispositivos menores */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+
+    input[type="text"] {
+        width: 80%;
+    }
+
+    button {
+        width: 80%;
+    }
+
+    nav a {
+        font-size: 1em;
+        margin: 0 15px;
+    }
+}
+/* Estilo geral da tabela */
+/* Estilo geral da tabela com tema escuro */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo das células da tabela */
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #444;
+}
+
+/* Estilo para cabeçalho da tabela */
+th {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Estilo das células de dados */
+td {
+    background-color: #2a2a2a;
+}
+
+/* Efeito de hover nas linhas da tabela */
+tr:hover {
+    background-color: #444;
+}
+
+/* Estilo para o rodapé da tabela, se houver */
+tfoot {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+}

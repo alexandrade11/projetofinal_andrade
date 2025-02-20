@@ -4,11 +4,13 @@ const path = require('path');
 const mysql = require('mysql2');
 const axios = require('axios')
 const port = 3009;
+app.use(express.static('public'))
 app.set('view engine', 'ejs');
 // Criar o servidor HTTP
 app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`)
 })
+
 
 const connection = mysql.createConnection({
 host: '127.0.0.1',
@@ -99,26 +101,34 @@ app.post('/api/songs', (req, res) => {
 });
 
 
-app.put('/api/songs/:id', (req, res) =>{
-    const id = req.body.id;
-    const title = req.body.title;
-    const artist = req.body.artist;
-    const genre = req.body.genre;
-    const album = req.body.album;
-    const duration_seconds = req.body.duration_seconds;
-    const release_date = req.body.release_date;
-    const likes = req.body.likes;
 
-    const myQuery = `UPDATE songs SET title = "${title}", artist = "${artist}", genre = "${genre}", album = "${album}",
-    duration_seconds = "${duration_seconds}",release_date = "${release_date}",likes = "${likes}" WHERE id = "${id}"`;
 
-    connection.query(myQuery, (err, results) => {
+app.put('/api/songs/:id', (req, res) =>{  
+    const id = req.params.id;
+   
+    // Validação do ID da música
+    if (!id || isNaN(id)) {
+      return res.status(400).send('ID da música não é válido');
+    }
+   
+    const {title, artist, album, genre, duration_seconds, release_date, likes} = req.body;
+   
+    // Validação dos campos obrigatórios
+    if (!title || !artist) {
+      return res.status(400).send('Campos obrigatórios: title, artist');
+    }
+   
+    const query = `UPDATE songs SET title = "${title}", artist = "${artist}", album = "${album}", genre = "${genre}", duration_seconds = "${duration_seconds}", release_date = "${release_date}", likes = "${likes}" WHERE id = "${id}"`;
+   
+    connection.query(query, (err, results) => {
       if (err) {
-        return res.status(500).send('Erro ao atualizar musica: ' + err.message);
+        return res.status(500).send('Erro ao atualizar música: ' + err.message);
       }
-      res.status(200).send('User atualizado com sucesso!');
+      res.sendStatus(200);
     });
-})
+  });
+
+
 
 app.delete('/api/songs/:id', (req, res) =>{
   const id = req.params.id;
